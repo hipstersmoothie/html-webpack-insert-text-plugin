@@ -29,12 +29,12 @@ plugins: [
     {
       target: 'index.html',
       parent: 'head',
-      text: style
+      text: 'body { background: red; }'
     },
     {
       target: 'index.html',
       parent: 'body',
-      text: specLabel
+      text: '<script>alert('foo')</script>'
     }
   ])
 ];
