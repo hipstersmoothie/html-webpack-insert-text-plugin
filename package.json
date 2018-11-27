@@ -1,8 +1,11 @@
 {
-  "name": "html-webpack-inject-plugin",
-  "version": "3.0.1",
-  "description": "inject external source to html",
+  "name": "html-webpack-insert-text-plugin",
+  "version": "0.0.1",
+  "description": "Insert text into the head or body of your HTML",
   "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "lint": "xo",
     "build": "babel src -d lib --extensions '.ts'",
@@ -15,10 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kagawagao/html-webpack-inject-plugin.git"
+    "url": "https://github.com/hipstersmoothie/html-webpack-insert-text-plugin"
   },
   "keywords": [
     "webpack-plugin",
+    "html",
     "webpack"
   ],
   "author": {
@@ -26,9 +30,6 @@
     "email": "lisowski54@gmail.com"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kagawagao/html-webpack-inject-plugin/issues"
-  },
   "homepage": "https://github.com/kagawagao/html-webpack-inject-plugin#readme",
   "devDependencies": {
     "@babel/cli": "7.1.5",
@@ -41,11 +42,6 @@
     "babel-eslint": "^10.0.1",
     "eslint": "5.9.0",
     "eslint-config-prettier": "^3.3.0",
-    "eslint-config-standard": "12.0.0",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-node": "8.0.0",
-    "eslint-plugin-promise": "4.0.1",
-    "eslint-plugin-standard": "4.0.0",
     "github-semantic-version": "^7.6.0",
     "html-webpack-plugin": "4.0.0-beta.4",
     "husky": "^1.2.0",
@@ -58,9 +54,6 @@
   "peerDependencies": {
     "html-webpack-plugin": "4.0.0",
     "webpack": "4.0.0"
-  },
-  "engines": {
-    "node": ">= 6.11.5"
   },
   "prettier": {
     "singleQuote": true
