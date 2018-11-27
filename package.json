@@ -1,6 +1,6 @@
 {
   "name": "html-webpack-insert-text-plugin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Insert text into the head or body of your HTML",
   "main": "lib/index.js",
   "publishConfig": {
