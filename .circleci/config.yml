@@ -1,0 +1,100 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/html-webpack-inject-plugin
+  docker:
+    - image: circleci/node:latest-browsers
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package.json checksum
+            # when this file is changed, this key will fail
+            - html-webpack-inject-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+            - html-webpack-inject-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - html-webpack-inject-plugin-{{ .Branch }}
+            # Find the most recent cache used from any branch
+            - html-webpack-inject-plugin-master
+            - html-webpack-inject-plugin-
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: html-webpack-inject-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/html-webpack-inject-plugin
+      - run:
+          name: Lint
+          command: yarn lint
+
+  typecheck:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/html-webpack-inject-plugin
+      - run:
+          name: Typecheck
+          command: yarn typecheck
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/html-webpack-inject-plugin
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Release
+          command: yarn run release
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - install:
+          filters:
+            tags:
+              only: /.*/
+
+      - lint:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+
+      - typecheck:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+
+      - release:
+          requires:
+            - lint
+            - typecheck
+          filters:
+            branches:
+              only:
+                - master

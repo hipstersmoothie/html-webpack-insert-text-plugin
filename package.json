@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "xo",
     "build": "babel src -d lib --extensions '.ts'",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prerelease": "npm run build",
+    "release": "github-semantic-version --bump --changelog --push --publish"
   },
   "files": [
     "lib"
@@ -44,6 +46,7 @@
     "eslint-plugin-node": "8.0.0",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-standard": "4.0.0",
+    "github-semantic-version": "^7.6.0",
     "html-webpack-plugin": "4.0.0-beta.4",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
@@ -81,5 +84,11 @@
     "extends": [
       "prettier"
     ]
+  },
+  "gsv": {
+    "majorLabel": "Version: Major",
+    "minorLabel": "Version: Minor",
+    "patchLabel": "Version: Patch",
+    "internalLabel": "No version: Internal"
   }
 }
