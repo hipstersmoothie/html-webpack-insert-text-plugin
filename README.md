@@ -1,5 +1,7 @@
 # html-webpack-insert-text-plugin
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge)](https://github.com/prettier/prettier) [![CircleCI](https://img.shields.io/circleci/project/github/hipstersmoothie/html-webpack-insert-text-plugin/master.svg?style=for-the-badge)](https://circleci.com/gh/hipstersmoothie/html-webpack-insert-text-plugin) [![npm](https://img.shields.io/npm/v/html-webpack-insert-text-plugin.svg?style=for-the-badge)](https://www.npmjs.com/package/html-webpack-insert-text-plugin) [![npm](https://img.shields.io/npm/dt/html-webpack-insert-text-plugin.svg?style=for-the-badge)](https://www.npmjs.com/package/html-webpack-insert-text-plugin)
+
 Insert text into the head or body of your HTML
 
 ## Installation
