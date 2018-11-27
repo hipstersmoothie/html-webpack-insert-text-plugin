@@ -1,32 +1,56 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const filter = (assets, section, target) =>
+  assets
+    .filter(item => item.parent === section)
+    .filter(item => item.target === target)
+    .map(item => item.text)
+    .join('\n');
+
+const insert = (html, tag, content) => {
+  const mod = tag === 'body' ? 0 : tagIndex + tag.length;
+  const tagIndex = html.indexOf(tag);
+
+  return [
+    html.slice(0, tagIndex + mod),
+    content,
+    html.slice(tagIndex + mod)
+  ].join('');
+};
 
 export default class HtmlWebpackInjectPlugin {
-  constructor (config) {
-    const { externals = [], parent = 'head' } = config
-
-    this.assets = externals.map(({ tag = 'meta', attrs = {} }) => {
-      return {
-        tagName: tag,
-        attributes: attrs,
-        closeTag: true
-      }
-    })
-
-    if (parent !== 'head' && parent !== 'body') {
-      throw new TypeError('parent should be one of head and body')
+  constructor(config) {
+    if (config.length === 0) {
+      throw new TypeError('Need asset definitions');
     }
-    this.parent = parent
+
+    this.assets = config;
   }
 
-  apply = (compiler) => {
-    compiler.hooks.compilation.tap('HtmlWebpackInjectPlugin', (compilation) => {
-      compilation.hooks.htmlWebpackPluginAlterAssetTags.tapAsync('HtmlWebpackInjectPlugin', (htmlPluginData, cb) => {
-        if (this.parent === 'head') {
-          htmlPluginData.head = htmlPluginData.head.concat(this.assets)
-        } else {
-          htmlPluginData.body = this.assets.concat(htmlPluginData.body)
-        }
-        return cb(null, htmlPluginData)
-      })
-    })
-  }
+  addAssets = (htmlPluginData, tag) => {
+    const content = filter(
+      this.assets,
+      tag,
+      htmlPluginData.plugin.options.filename
+    );
+
+    htmlPluginData.html = insert(
+      htmlPluginData.html,
+      tag === 'body' ? `</${tag}>` : `<${tag}>`,
+      content
+    );
+  };
+
+  apply = compiler => {
+    compiler.hooks.compilation.tap('HtmlWebpackInjectPlugin', compilation => {
+      const hooks = HtmlWebpackPlugin.getHooks(compilation);
+
+      hooks.beforeEmit.tap('HtmlWebpackInjectPlugin', htmlPluginData => {
+        this.addAssets(htmlPluginData, 'head');
+        this.addAssets(htmlPluginData, 'body');
+
+        return htmlPluginData;
+      });
+    });
+  };
 }
