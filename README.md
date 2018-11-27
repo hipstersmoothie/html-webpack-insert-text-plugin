@@ -1,4 +1,4 @@
-# html-webpack-insert-plugin
+# html-webpack-insert-text-plugin
 
 Insert text into the head or body of your HTML
 
@@ -7,7 +7,7 @@ Insert text into the head or body of your HTML
 You must be running webpack 4.
 
 ```bash
-npm install --save-dev html-webpack-insert-plugin
+npm install --save-dev html-webpack-insert-text-plugin
 ```
 
 ## Usage
@@ -15,9 +15,10 @@ npm install --save-dev html-webpack-insert-plugin
 Require the plugin in your webpack config
 
 ```javascript
-import HtmlWebpackInsertPlugin from 'html-webpack-insert-plugin';
+import HtmlWebpackInsertPlugin from 'html-webpack-insert-text-plugin';
 // or
-const HtmlWebpackInsertPlugin = require('html-webpack-insert-plugin').default;
+const HtmlWebpackInsertPlugin = require('html-webpack-insert-text-plugin')
+  .default;
 ```
 
 Add the plugin to your webpack config as follows
@@ -42,7 +43,7 @@ plugins: [
 
 ## Structure
 
-`html-webpack-insert-plugin` takes an array of configuration objects. Those object should have the following structure.
+`html-webpack-insert-text-plugin` takes an array of configuration objects. Those object should have the following structure.
 
 - `target` (optional): name of HTML page to target
 - `parent`: parent element to add into, only can be `head` or `body`, default value is `head`

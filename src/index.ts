@@ -22,7 +22,7 @@ const insert = (html: string, parent: Parent, content: string) => {
   return [html.slice(0, tagIndex), content, html.slice(tagIndex)].join('');
 };
 
-export default class HtmlWebpackInjectPlugin {
+export default class HtmlWebpackInsertTextPlugin {
   private readonly assets: IAsset[];
 
   constructor(config: IAsset[]) {
@@ -47,15 +47,18 @@ export default class HtmlWebpackInjectPlugin {
   };
 
   apply = (compiler: Compiler) => {
-    compiler.hooks.compilation.tap('HtmlWebpackInjectPlugin', compilation => {
-      const hooks = HtmlWebpackPlugin.getHooks(compilation);
+    compiler.hooks.compilation.tap(
+      'HtmlWebpackInsertTextPlugin',
+      compilation => {
+        const hooks = HtmlWebpackPlugin.getHooks(compilation);
 
-      hooks.beforeEmit.tap('HtmlWebpackInjectPlugin', htmlPluginData => {
-        this.addAssets(htmlPluginData, 'head');
-        this.addAssets(htmlPluginData, 'body');
+        hooks.beforeEmit.tap('HtmlWebpackInsertTextPlugin', htmlPluginData => {
+          this.addAssets(htmlPluginData, 'head');
+          this.addAssets(htmlPluginData, 'body');
 
-        return htmlPluginData;
-      });
-    });
+          return htmlPluginData;
+        });
+      }
+    );
   };
 }
