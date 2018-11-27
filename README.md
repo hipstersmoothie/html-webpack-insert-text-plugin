@@ -1,27 +1,13 @@
-# html-webpack-inject-plugin
+# html-webpack-insert-plugin
 
-[![node](https://img.shields.io/node/v/html-webpack-inject-plugin.svg)](https://www.npmjs.com/package/html-webpack-inject-plugin)
-[![npm](https://img.shields.io/npm/v/html-webpack-inject-plugin.svg)](https://www.npmjs.com/package/html-webpack-inject-plugin)
-[![license](https://img.shields.io/npm/l/html-webpack-inject-plugin.svg)](https://github.com/kagawagao/html-webpack-inject-plugin/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/kagawagao/html-webpack-inject-plugin.svg?branch=master)](https://travis-ci.org/kagawagao/html-webpack-inject-plugin)
-[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
-
-inject external tag to html
+Insert text into the head or body of your HTML
 
 ## Installation
 
-You must be running webpack on node 6.x or higher
-
-### `webpack v4.x`
+You must be running webpack 4.
 
 ```bash
-npm install --save-dev html-webpack-inject-plugin
-```
-
-### `webpack v3.x` or lower
-
-```bash
-npm install --save-dev html-webpack-inject-plugin@1.x
+npm install --save-dev html-webpack-insert-plugin
 ```
 
 ## Usage
@@ -29,9 +15,9 @@ npm install --save-dev html-webpack-inject-plugin@1.x
 Require the plugin in your webpack config
 
 ```javascript
-import HtmlWebpackInjectPlugin from 'html-webpack-inject-plugin'
+import HtmlWebpackInsertPlugin from 'html-webpack-insert-plugin';
 // or
-const HtmlWebpackInjectPlugin = require('html-webpack-inject-plugin').default
+const HtmlWebpackInsertPlugin = require('html-webpack-insert-plugin').default;
 ```
 
 Add the plugin to your webpack config as follows
@@ -39,26 +25,25 @@ Add the plugin to your webpack config as follows
 ```javascript
 plugins: [
   new HtmlWebpackPlugin(),
-  new HtmlWebpackInjectPlugin({
-    externals: [{
-      tag: 'script',
-      attrs: {
-        src: 'your-script.js',
-        type: 'text/javascript'
-      }
-    }],
-    parent: 'head' // default is head
-  })
-]
+  new HtmlWebpackInjectPlugin([
+    {
+      target: 'index.html',
+      parent: 'head',
+      text: style
+    },
+    {
+      target: 'index.html',
+      parent: 'body',
+      text: specLabel
+    }
+  ])
+];
 ```
 
-## Options
+## Structure
 
-- `externals: Array<Tag>`: external [tags](#tag) which you want to add
+`html-webpack-insert-plugin` takes an array of configuration objects. Those object should have the following structure.
 
-- `parent`: parent element will be added into, only can be `head` and `body`, default value is `head`
-
-## Tag
-
-- `tag`: tag name, such as `meta` `link` `script`
-- `attrs`: [html attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes)
+- `target` (optional): name of HTML page to target
+- `parent`: parent element to add into, only can be `head` or `body`, default value is `head`
+- `text`: text to insert into the `parent`
