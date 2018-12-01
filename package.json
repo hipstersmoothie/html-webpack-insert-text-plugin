@@ -52,8 +52,8 @@
     "xo": "^0.23.0"
   },
   "peerDependencies": {
-    "html-webpack-plugin": "4.0.0",
-    "webpack": "4.0.0"
+    "html-webpack-plugin": "4.x",
+    "webpack": "4.x"
   },
   "prettier": {
     "singleQuote": true
