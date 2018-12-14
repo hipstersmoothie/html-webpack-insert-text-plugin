@@ -1,6 +1,6 @@
 {
   "name": "html-webpack-insert-text-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Insert text into the head or body of your HTML",
   "main": "lib/index.js",
   "publishConfig": {
@@ -11,7 +11,7 @@
     "build": "babel src -d lib --extensions '.ts'",
     "typecheck": "tsc --noEmit",
     "prerelease": "npm run build",
-    "release": "github-semantic-version --bump --changelog --push --publish"
+    "release": "auto shipit"
   },
   "files": [
     "lib"
@@ -39,10 +39,10 @@
     "@babel/preset-env": "7.1.6",
     "@babel/preset-typescript": "^7.1.0",
     "@types/webpack": "^4.4.19",
+    "auto-release-cli": "^0.24.0",
     "babel-eslint": "^10.0.1",
     "eslint": "5.9.0",
     "eslint-config-prettier": "^3.3.0",
-    "github-semantic-version": "^7.6.0",
     "html-webpack-plugin": "4.0.0-beta.4",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
@@ -78,10 +78,10 @@
       "prettier"
     ]
   },
-  "gsv": {
-    "majorLabel": "Version: Major",
-    "minorLabel": "Version: Minor",
-    "patchLabel": "Version: Patch",
-    "internalLabel": "No version: Internal"
+  "auto": {
+    "major": "Version: Major",
+    "minor": "Version: Minor",
+    "patch": "Version: Patch",
+    "internal": "No version: Internal"
   }
 }
