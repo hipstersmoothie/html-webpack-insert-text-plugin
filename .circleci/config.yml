@@ -1,9 +1,9 @@
-version: 2
+version: 2.1
 
 defaults: &defaults
   working_directory: ~/html-webpack-inject-plugin
   docker:
-    - image: circleci/node:latest-browsers
+    - image: circleci/node:12-browsers
 
 jobs:
   install:
